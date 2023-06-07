@@ -1,0 +1,9 @@
+In the dot product calculation, given a point P on an elliptic curve and an integer k, the result of kP is calculated.
+This process can be achieved by repeatedly performing the addition operation, but traditional dot product algorithms can lead to excessive computation, especially when k is very large.
+An improved dot product algorithm reduces the computation by breaking k into a simple sequence of elementary operations.
+This code implements the following function:
+Uses a secp256k1 curve as an elliptic curve parameter.
+Generates a random private key and the corresponding public key.
+implements an improved dot product algorithm for computing k times a point on a curve.
+Provides the method getDomainParameters() for accessing elliptic curve parameters.
+
