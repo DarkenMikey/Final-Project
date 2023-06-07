@@ -1,16 +1,16 @@
-//自行设计的算法
-/**代码以及算法思路：
- * 在点乘计算中，给定一个椭圆曲线上的点P和一个整数k，计算kP的结果。
- * 这个过程可以通过重复执行加法操作来实现，但是传统的点乘算法可能会导致计算量过大，特别是当k非常大时。
- * 改进的点乘算法通过将k分解成一个简单的基本操作序列来减少计算量。
- * 这个代码实现了以下功能：
- * 使用secp256k1曲线作为椭圆曲线参数。
- * 生成一个随机私钥和相应的公钥。
- * 实现了一个改进的点乘算法，用于计算一个点在曲线上的k倍。
- * 提供了访问椭圆曲线参数的方法getDomainParameters()。
- *
- *
- * 伪代码：
+// self-designed algorithm
+/**Code and algorithm ideas:
+* In point multiplication, given a point P on an elliptic curve and an integer k, compute the result of kP.
+* This process can be done by repeatedly performing the addition operation, but traditional point multiplication algorithms can lead to excessive computation, especially when k is very large.
+* The improved point multiplication algorithm reduces computation by decomposing k into a simple sequence of elementary operations.
+* This code does the following:
+* Use the secp256k1 curve as an elliptic curve parameter.
+* Generate a random private key and the corresponding public key.
+* Implemented a modified point multiplication algorithm for computing k times a point on a curve.
+* getDomainParameters() provides access to elliptic curve Parameters.
+*
+*
+* Pseudo-code:
  * Improved Dot Product Algorithm:
  *
  * Input: positive integer k
