@@ -1,4 +1,4 @@
-//这是分别调用ECCUtil和RSAUtil的
+// This calls ECCUtil and RSAUtil, respectively
 import java.util.Base64;
 import java.security.KeyPair;
 import java.security.interfaces.ECPrivateKey;
@@ -17,10 +17,10 @@ class EncryptionOneByOne {
         System.out.println("Please input the key size of RSA :");
         int rsaKeySize = scanner.nextInt();
 
-        // 要加密的文本
+        // The text to encrypt
         String plaintext = "ZJC201918020429";
 
-        // ECC加密和解密
+        // ECC encryption and decryption
         KeyPair eccKeyPair = EncryptionFunction.generateECCKeyPair(eccKeySize);
         ECPublicKey eccPublicKey = (ECPublicKey) eccKeyPair.getPublic();
         ECPrivateKey eccPrivateKey = (ECPrivateKey) eccKeyPair.getPrivate();
@@ -31,7 +31,7 @@ class EncryptionOneByOne {
         System.out.println("ECC Encrypted: " + Base64.getEncoder().encodeToString(eccEncrypted));
         System.out.println("ECC Decrypted: " + eccDecrypted);
 
-        // RSA加密和解密
+        //rsa encryption and reconciliation
         KeyPair rsaKeyPair = RSAUtil.generateRSAKeyPair(rsaKeySize);
         RSAPublicKey rsaPublicKey = (RSAPublicKey) rsaKeyPair.getPublic();
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) rsaKeyPair.getPrivate();

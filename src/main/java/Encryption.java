@@ -18,10 +18,10 @@ int eccKeySize = scanner.nextInt();
     System.out.println("Please input the key size of RSA :");
 int rsaKeySize = scanner.nextInt();
 
-//要加密的文本
+// The text to encrypt
 String plaintext = "ZJC201918020429";
 
-//ECC加密和解密
+//ECC encryption and decryption
 KeyPair eccKeyPair = EncryptionFunction.generateECCKeyPair(eccKeySize);
 ECPublicKey eccPublicKey = (ECPublicKey) eccKeyPair.getPublic();
 ECPrivateKey eccPrivateKey = (ECPrivateKey) eccKeyPair.getPrivate();
@@ -32,7 +32,7 @@ String eccDecrypted = EncryptionFunction.decryptECC(eccEncrypted, eccPrivateKey)
 System.out.println("ECC Encrypted: " + Base64.getEncoder().encodeToString(eccEncrypted));
 System.out.println("ECC Decrypted: " + eccDecrypted);
 
-//RSA加密和解密
+//RSA encryption and decryption
 KeyPair rsaKeyPair = EncryptionFunction.generateRSAKeyPair(rsaKeySize);
 RSAPublicKey rsaPublicKey = (RSAPublicKey) rsaKeyPair.getPublic();
 RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) rsaKeyPair.getPrivate();
@@ -43,7 +43,7 @@ String rsaDecrypted = EncryptionFunction.decryptRSA(rsaEncrypted, rsaPrivateKey)
 System.out.println("RSA Encrypted: " + Base64.getEncoder().encodeToString(rsaEncrypted));
  System.out.println("RSA Decrypted: " + rsaDecrypted);
 
-int rounds = 100; // 更改此值以运行不同的加密和解密轮数
+int rounds = 100; // Change this value to run different encryption and decryption rounds
 
  EncryptionFunction.timeTest(plaintext,rounds,eccKeySize,rsaKeySize);
 }

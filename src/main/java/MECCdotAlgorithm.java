@@ -51,54 +51,55 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 /**
- * 椭圆曲线密码学改进的点乘算法类。
+ * Elliptic curve cryptography improved point multiplication algorithm class.
  */
 public class MECCdotAlgorithm {
-    private ECDomainParameters domainParameters;// 定义域参数
+    private ECDomainParameters domainParameters;// Domain parameters
 
     /**
-     * 构造函数，根据曲线名称设置椭圆曲线参数。
-     * @param curveName 椭圆曲线名称。
+     * Constructor that sets the elliptic curve parameters based on the curve name.
+     * @param curveName The name of an elliptic curve.
      */
     public MECCdotAlgorithm(String curveName) {
         X9ECParameters params;
         if (curveName.equals("secp160r1") || curveName.equals("secp192r1")) {
-            params = SECNamedCurves.getByName(curveName);// 根据名称获取曲线参数
+            params = SECNamedCurves.getByName(curveName);// Get curve parameters by name
         } else {
-            params = CustomNamedCurves.getByName(curveName);// 根据名称获取自定义曲线参数
+            params = CustomNamedCurves.getByName(curveName);// Get custom curve parameters by name
         }
         domainParameters = new ECDomainParameters(params.getCurve(), params.getG(), params.getN(), params.getH());
     }
     /**
-     * 生成私钥的方法。
-     * @return 256位随机私钥。
+     * The method to generate the private key.
+     * @return 256-bit random private key.
      */
     public BigInteger generatePrivateKey() {
         return new BigInteger(256, new SecureRandom());
-    }// 生成并返回随机私钥
+    }// Generate and return a random private key
 
     /**
-     * 根据私钥生成公钥的方法。
-     * @param privateKey 私钥。
-     * @return 公钥。
+     * A method of generating a public key from a private key.
+     * @param privateKey Private key.
+     * @return public key.
      */
     public ECPoint generatePublicKey(BigInteger privateKey) {
-        return domainParameters.getG().multiply(privateKey); // 生成并返回公钥
-    }// 生成并返回公钥
+        return domainParameters.getG().multiply(privateKey); // Generate and return the public key
+    }// Generate and return the public key
+
     /**
-     * 改进的点乘算法的方法，用于计算一个点在曲线上的k倍。
-     * @param k 倍数。
-     * @param P 曲线上的点。
-     * @return Q=kP的结果。
+     * The method of the modified point multiplication algorithm is used to calculate k times of a point on the curve.
+     * @param k multiples.
+     * @param P points on the curve.
+     * @return Q= result of kP.
      */
     public ECPoint improvedDotProduct(BigInteger k, ECPoint P) {
-        ArrayList<Integer> arr = new ArrayList<>();// 创建一个ArrayList用于存储k的分解结果
+        ArrayList<Integer> arr = new ArrayList<>();// Create an ArrayList to store the factorization of k
         BigInteger bigTwo = BigInteger.valueOf(2);
         BigInteger bigThree = BigInteger.valueOf(3);
         BigInteger bigFour = BigInteger.valueOf(4);
-        BigInteger copyK = new BigInteger(k.toString());// 创建k的副本以避免修改原始值
+        BigInteger copyK = new BigInteger(k.toString());// Create a copy of k to avoid modifying the original value
         int i = 0;
-        // 将k分解为基本操作序列
+        // Decompose k into a sequence of basic operations
         while (!copyK.equals(BigInteger.ONE)) {
             if (copyK.mod(bigFour).equals(BigInteger.ZERO)) {
                 copyK = copyK.divide(bigFour);
@@ -118,7 +119,7 @@ public class MECCdotAlgorithm {
             }
             i++;
         }
-        // 计算Q=kP的结果
+        // compute the result of Q=kP
         ECPoint Q = P;
         for (int j = i - 1; j >= 0; j--) {
             switch (arr.get(j)) {
@@ -140,15 +141,15 @@ public class MECCdotAlgorithm {
             }
         }
 
-        return Q;// 计算Q=kP的结果
+        return Q;// compute the result of Q=kP
     }
     /**
-     * 获取椭圆曲线域参数的方法。
-     * @return 域参数。
+     * The method of obtaining the elliptic curve domain parameters.
+     * @return domain parameter.
      */
     public ECDomainParameters getDomainParameters() {
         return domainParameters;
-    }// 返回域参数
+    }// Return domain arguments
 }
 //import org.bouncycastle.crypto.ec.CustomNamedCurves;
 //import org.bouncycastle.crypto.params.ECDomainParameters;

@@ -1,4 +1,4 @@
-//ECC算法的类
+// Classes for ECC algorithms
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.math.BigInteger;
@@ -13,27 +13,27 @@ import javax.crypto.NoSuchPaddingException;
 
 
 public class ECCUtil {
-    // 添加BouncyCastleProvider作为安全提供者
+    // Add BouncyCastleProvider as the security provider
     static {
         Security.addProvider(new BouncyCastleProvider());
     }
-    // 生成ECC密钥对的方法
+    // Method to generate ECC key pairs
     public static KeyPair generateECCKeyPair(int keySize) throws NoSuchAlgorithmException, NoSuchProviderException {
-        // 创建KeyPairGenerator实例，指定算法为EC，提供者为BC(Bouncy Castle)
+        // Create KeyPairGenerator instance with EC algorithm and BC provider (Bouncy Castle)
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
-        keyPairGenerator.initialize(keySize);// 初始化KeyPairGenerator，设置密钥长度
-        return keyPairGenerator.generateKeyPair();// 生成并返回密钥对
+        keyPairGenerator.initialize(keySize);// Initialize KeyPairGenerator and set key length
+        return keyPairGenerator.generateKeyPair();// Generate and return the key pair
     }
-    // 使用ECC公钥进行加密的方法
+    // Cryptographic method using ECC public key
     public static byte[] encryptECC(String plaintext, ECPublicKey publicKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException {
-        Cipher cipher = Cipher.getInstance("ECIES", "BC");  // 创建Cipher实例，指定算法为ECIES，提供者为BC(Bouncy Castle)
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey); // 初始化Cipher，设置为加密模式，使用公钥进行加密
-        return cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));// 对明文进行加密，并返回加密后的密文
+        Cipher cipher = Cipher.getInstance("ECIES", "BC");  // Create Cipher instance with ECIES and BC(Bouncy Castle) provider
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey); // Initialize Cipher, set it to encryption mode, and encrypt with public key
+        return cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));// Encrypt the plaintext and return the encrypted ciphertext
     }
-    // 使用ECC私钥进行解密的方法
+    // Decryption method using ECC private key
     public static String decryptECC(byte[] ciphertext, ECPrivateKey privateKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException {
-        Cipher cipher = Cipher.getInstance("ECIES", "BC"); // 使用ECC私钥进行解密的方法
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);// 初始化Cipher，设置为解密模式，使用私钥进行解密
-        return new String(cipher.doFinal(ciphertext), StandardCharsets.UTF_8);// 对密文进行解密，并返回解密后的明文
+        Cipher cipher = Cipher.getInstance("ECIES", "BC");// Decryption method using ECC private key
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);// Initialize Cipher, set it to decrypt mode, decrypt using private key
+        return new String(cipher.doFinal(ciphertext), StandardCharsets.UTF_8);// Decrypt the ciphertext and return the decrypted plaintext
     }
 }
